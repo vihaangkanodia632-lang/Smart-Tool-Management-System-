@@ -1,0 +1,61 @@
+# Smart Tool Management System — .gitignore
+
+# ── Credentials (NEVER commit these) ──────────────────────
+config.py           # Contains WiFi + Firebase credentials
+*.env               # Environment variable files
+secrets.py          # Any secrets file
+
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyc
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ── MicroPython compiled files ────────────────────────────
+*.mpy
+
+# ── Node / JavaScript ─────────────────────────────────────
+node_modules/
+npm-debug.log
+.npm
+
+# ── OS Files ──────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDE / Editor ──────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.thonny/
+
+# ── Arduino ───────────────────────────────────────────────
+build/
+*.elf
+*.bin
+*.hex
+*.map
+
+# ── KiCad PCB ─────────────────────────────────────────────
+*.kicad_pcb-bak
+*.sch-bak
+fp-info-cache
+_autosave-*
+
+# ── Temporary files ───────────────────────────────────────
+*.tmp
+*.temp
+*.log
