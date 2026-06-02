@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>ToolVault — Smart Tool Management</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- ═══ AUTH SCREEN ═══ -->
+<div id="authBox">
+  <div class="auth-card">
+    <div class="auth-logo">T</div>
+    <div class="auth-title">ToolVault</div>
+    <div class="auth-subtitle">Smart Warehouse Tool Management</div>
+
+    <input class="auth-input" type="email"    id="emailField"    placeholder="Email address"/>
+    <input class="auth-input" type="password" id="passwordField" placeholder="Password"/>
+
+    <button class="btn" id="loginBtn">Sign In</button>
+    <div id="authMsg"></div>
+  </div>
+</div>
+
+<!-- ═══ MAIN APP ═══ -->
+<div id="mainApp">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="brand-mark">T</div>
+      <div class="brand-name">Tool<span>Vault</span></div>
+    </div>
+    <div class="header-right">
+      <span class="status-badge offline" id="statusBadge">● Offline</span>
+      <span id="clockEl">--:--:--</span>
+      <span id="userEmail"></span>
+      <span id="lastSync"></span>
+      <button class="logout-btn" id="logoutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <div class="shell">
+
+    <!-- Overdue Banner -->
+    <div class="overdue-banner hidden" id="overdueBar">
+      ⚑ <span id="overdueText"></span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="loans">Active Loans</button>
+      <button class="tab-btn" data-tab="history">History</button>
+      <button class="tab-btn" data-tab="alerts">
+        Alerts
+        <span class="alert-pip" id="alertPip" style="display:none">0</span>
+      </button>
+      <button class="tab-btn" data-tab="admin">Admin</button>
+    </div>
+
+    <!-- ═══ DASHBOARD TAB ═══ -->
+    <div class="tab-pane active" id="pane-dashboard">
+
+      <div class="stats-grid">
+        <div class="stat-card s-amber">
+          <div class="stat-label">Borrowed</div>
+          <div class="stat-val" id="statBorrowed">—</div>
+          <div class="stat-sub">tools out</div>
+        </div>
+        <div class="stat-card s-green">
+          <div class="stat-label">Available</div>
+          <div class="stat-val" id="statAvail">—</div>
+          <div class="stat-sub">ready to use</div>
+        </div>
+        <div class="stat-card s-blue">
+          <div class="stat-label">Total Tools</div>
+          <div class="stat-val" id="statTotal">—</div>
+          <div class="stat-sub">registered</div>
+        </div>
+        <div class="stat-card s-red">
+          <div class="stat-label">Overdue</div>
+          <div class="stat-val" id="statOverdue">0</div>
+          <div class="stat-sub">&gt;8 hours out</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">▣ All Tools Status</span>
+          <input class="srch" id="srchTools" placeholder="Search tools..."/>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Tool Name</th><th>Category</th><th>Serial No.</th>
+              <th>RFID UID</th><th>Status</th><th>Held By</th><th>Since</th>
+            </tr></thead>
+            <tbody id="toolsBody">
+              <tr><td colspan="7" class="empty-cell">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ACTIVE LOANS TAB ═══ -->
+    <div class="tab-pane" id="pane-loans">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">◈ Currently Borrowed Tools</span>
+          <input class="srch" id="srchLoans" placeholder="Search worker or tool..."/>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Worker</th><th>Tool</th><th>Category</th>
+              <th>Checked Out</th><th>Duration</th><th>Status</th>
+            </tr></thead>
+            <tbody id="loansBody">
+              <tr><td colspan="6" class="empty-cell">No active loans</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ HISTORY TAB ═══ -->
+    <div class="tab-pane" id="pane-history">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">≡ Transaction Log</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <select class="srch" id="histFilter">
+              <option value="all">All Events</option>
+              <option value="CHECKOUT">Checkouts</option>
+              <option value="RETURN">Returns</option>
+            </select>
+            <input class="srch" id="srchHist" placeholder="Search..."/>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Event</th><th>Worker</th><th>Tool</th><th>Timestamp</th>
+            </tr></thead>
+            <tbody id="histBody">
+              <tr><td colspan="4" class="empty-cell">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ALERTS TAB ═══ -->
+    <div class="tab-pane" id="pane-alerts">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">⚑ System Alerts</span>
+          <button class="btn btn-red btn-sm" id="clearAlertsBtn">Clear All</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Type</th><th>Details</th><th>By / Context</th><th>Timestamp</th>
+            </tr></thead>
+            <tbody id="alertsBody">
+              <tr><td colspan="4" class="empty-cell">No alerts</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ADMIN TAB ═══ -->
+    <div class="tab-pane" id="pane-admin">
+
+      <div class="sec-label">Register New Worker</div>
+      <div class="panel" style="margin-bottom:24px">
+        <div class="form-grid">
+          <div class="fgrp">
+            <label>RFID Card UID <span style="color:var(--amber)">(from Serial Monitor)</span></label>
+            <input id="wUID" placeholder="e.g. A1B2C3D4"/>
+          </div>
+          <div class="fgrp"><label>Full Name</label><input id="wName" placeholder="e.g. Rahul Sharma"/></div>
+          <div class="fgrp"><label>Employee ID</label><input id="wEmpID" placeholder="e.g. EMP004"/></div>
+          <div class="fgrp"><label>Department</label><input id="wDept" placeholder="e.g. Maintenance"/></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-sm" id="regWorkerBtn"
+            style="width:auto;padding:10px 24px;font-size:14px">
+            Register Worker
+          </button>
+        </div>
+      </div>
+
+      <div class="sec-label">Register New Tool</div>
+      <div class="panel" style="margin-bottom:24px">
+        <div class="form-grid">
+          <div class="fgrp">
+            <label>RFID Tag UID <span style="color:var(--amber)">(from Serial Monitor)</span></label>
+            <input id="tUID" placeholder="e.g. T1U2V3W4"/>
+          </div>
+          <div class="fgrp"><label>Tool Name</label><input id="tName" placeholder="e.g. Cordless Drill"/></div>
+          <div class="fgrp">
+            <label>Category</label>
+            <select id="tCat">
+              <option>Power Tools</option>
+              <option>Hand Tools</option>
+              <option>Measurement</option>
+              <option>Electrical</option>
+              <option>Safety Equipment</option>
+              <option>Pneumatic</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fgrp"><label>Serial Number</label><input id="tSerial" placeholder="e.g. DRL-002"/></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-sm" id="regToolBtn"
+            style="width:auto;padding:10px 24px;font-size:14px">
+            Register Tool
+          </button>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="sec-label">Registered Workers</div>
+          <div class="panel">
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Name</th><th>Emp ID</th><th>Dept</th><th></th></tr></thead>
+                <tbody id="workerListBody">
+                  <tr><td colspan="4" class="empty-cell">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="sec-label">Registered Tools</div>
+          <div class="panel">
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Name</th><th>Category</th><th>S/N</th><th></th></tr></thead>
+                <tbody id="toolListBody">
+                  <tr><td colspan="4" class="empty-cell">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin -->
+
+  </div><!-- /shell -->
+</div><!-- /mainApp -->
+
+<!-- Load JS as module (required for Firebase ES modules) -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>

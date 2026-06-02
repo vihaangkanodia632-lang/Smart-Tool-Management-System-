@@ -1,0 +1,89 @@
+{
+  "workers": {
+    "REPLACE_WITH_WORKER_UID_1": {
+      "name": "Rahul Sharma",
+      "employeeId": "EMP001",
+      "department": "Maintenance",
+      "registeredAt": "01-Jan-2025 09:00:00"
+    },
+    "REPLACE_WITH_WORKER_UID_2": {
+      "name": "Priya Patel",
+      "employeeId": "EMP002",
+      "department": "Assembly",
+      "registeredAt": "01-Jan-2025 09:00:00"
+    },
+    "REPLACE_WITH_WORKER_UID_3": {
+      "name": "Arjun Mehta",
+      "employeeId": "EMP003",
+      "department": "Electrical",
+      "registeredAt": "01-Jan-2025 09:00:00"
+    }
+  },
+  "tools": {
+    "REPLACE_WITH_TOOL_TAG_UID_1": {
+      "name": "Cordless Drill",
+      "category": "Power Tools",
+      "serialNumber": "DRL-001",
+      "status": "available",
+      "borrowedBy": "",
+      "borrowedAt": "",
+      "borrowedEpoch": 0,
+      "registeredAt": "01-Jan-2025 09:00:00"
+    },
+    "REPLACE_WITH_TOOL_TAG_UID_2": {
+      "name": "Digital Multimeter",
+      "category": "Measurement",
+      "serialNumber": "DMM-001",
+      "status": "available",
+      "borrowedBy": "",
+      "borrowedAt": "",
+      "borrowedEpoch": 0,
+      "registeredAt": "01-Jan-2025 09:00:00"
+    },
+    "REPLACE_WITH_TOOL_TAG_UID_3": {
+      "name": "Socket Wrench Set",
+      "category": "Hand Tools",
+      "serialNumber": "WRN-001",
+      "status": "available",
+      "borrowedBy": "",
+      "borrowedAt": "",
+      "borrowedEpoch": 0,
+      "registeredAt": "01-Jan-2025 09:00:00"
+    },
+    "REPLACE_WITH_TOOL_TAG_UID_4": {
+      "name": "Angle Grinder",
+      "category": "Power Tools",
+      "serialNumber": "GRD-001",
+      "status": "available",
+      "borrowedBy": "",
+      "borrowedAt": "",
+      "borrowedEpoch": 0,
+      "registeredAt": "01-Jan-2025 09:00:00"
+    },
+    "REPLACE_WITH_TOOL_TAG_UID_5": {
+      "name": "Soldering Iron",
+      "category": "Electrical",
+      "serialNumber": "SLD-001",
+      "status": "available",
+      "borrowedBy": "",
+      "borrowedAt": "",
+      "borrowedEpoch": 0,
+      "registeredAt": "01-Jan-2025 09:00:00"
+    }
+  },
+  "activeLoans": {
+    "placeholder": {
+      "remove": "delete this node after import"
+    }
+  },
+  "history": {
+    "placeholder": {
+      "remove": "delete this node after import"
+    }
+  },
+  "alerts": {
+    "placeholder": {
+      "remove": "delete this node after import"
+    }
+  }
+}
